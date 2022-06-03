@@ -5,29 +5,31 @@
 
 <div class="container">
     <br>
-    <h1>Comunidade Impressionadora</h1>
-    <hr>
-    <h3>Publicações</h3>
+
+    <h3>Seu Post</h3>
 
 
     <div class="row border mt-3 p-4 meupost">
         <div class="col col-2">
-            <h6>Publicado em: {{ datetime.strftime(post.data_criacao, '%d/%m/%Y') }}</h6>
             <img src="{{ url_for('static', filename='foto_perfil/{}'.format(post.autor.foto_perfil)) }}" width="170">
 
         </div>
         <div class="col col-9 border mt-3 p-4">
+            <strong><small>Publicado em: {{ datetime.strftime(post.data_criacao, '%d/%m/%Y') }}</small></strong><br>
             {% if form_editar_post %}
                 <a href="#" class="text-decoration-none text-reset" data-bs-toggle="modal" data-bs-target="#exampleModal"><button class="btn btn-danger btn-sm mb-1">Excluir Post</button></a>
                 <form method="POST" action="{{ url_for('excluir_img', post_id=post.id) }}"><button class="btn btn-danger btn-sm">Excluir Imagem</button></form>
             {% endif %}
+
             <h4 class="mt-3">{{ post.autor.username }}</h4>
             <hr>
             <h4>{{ post.titulo }}</h4>
             <br>
             <p>{{ post.corpo }}</p>
             {% if post.imagem %}
-                <img src="{{ url_for('static', filename='imagem_post/{}'.format(post.imagem)) }}">
+                <picture>
+                    <img class="imagem_pt" src="{{ url_for('static', filename='imagem_post/{}'.format(post.imagem)) }}">
+                </picture>
             {% else %}
                 <p></p>
             {% endif %}

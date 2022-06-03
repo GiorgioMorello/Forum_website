@@ -12,11 +12,12 @@
     {% for post in posts %}
     <div class="row border mt-3 p-4 meupost">
         <div class="col col-2">
-            <h6>Publicado em: {{ datetime.strftime(post.data_criacao, '%d/%m/%Y') }}</h6>
             <a href="{{ url_for('exibir_usuario', id_user=post.autor.id) }}"><img src="{{ url_for('static', filename='foto_perfil/{}'.format(post.autor.foto_perfil)) }}" width="170"></a>
         </div>
+
         <div class="col col-9 border mt-3 p-4">
-            <h4>{{ post.autor.username }}</h4>
+            <strong><small>Publicado em: {{ datetime.strftime(post.data_criacao, '%d/%m/%Y') }}</small></strong>
+            <h4 class="mt-4">{{ post.autor.username }}</h4>
             <hr>
             <a href="{{ url_for('exibir_post', post_id=post.id) }}" class="text-decoration-none text-reset"><h4>{{ post.titulo }}</h4></a>
             <br>
@@ -27,6 +28,7 @@
                 <p></p>
             {% endif %}
         </div>
+
     </div>
     {% endfor %}
 </div>
