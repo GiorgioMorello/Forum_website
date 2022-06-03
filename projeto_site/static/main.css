@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reseting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+
+}
+
+.wrapper {
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5vw;
+}
+
+.wrapper .card {
+    width: 300px;
+    background: #222;
+    box-shadow: 5px 5px 10px #1f1f1f50,
+        -5px -5px 10px #1f1f1f50;
+    border: none;
+    overflow: hidden;
+}
+
+.wrapper .card .bg-pink {
+    width: 100%;
+    height: 100px;
+    background-color: #F50057;
+
+}
+
+
+
+.wrapper .card .img-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    z-index: 5;
+    border: 8px solid #222;
+    margin-top: calc((100px/2)*-1);
+}
+
+
+.wrapper .card a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.wrapper .card a:hover {
+    color: #f1f1f1;
+}
+
+.wrapper .card .btn {
+    font-size: 0.82rem;
+    color: #fff;
+    border-radius: 15px;
+}
+
+.wrapper .card .btn:hover,
+.wrapper .card .btn.following {
+    background-color: #F50057;
+}
+
+.wrapper .card .btn.following:hover {
+    background-color: #f50056c0;
+}
+
+.wrapper .card .head {
+    font-size: 0.8rem;
+    color: #F50057;
+    font-weight: 600;
+}
+
+.wrapper .card .fs-08 {
+    font-size: 0.8rem;
+}
+
+
+.pad {
+
+    border-radius: 15px;
+    margin: 10vw;
+    background-color: #00BFFF;
+
+}
+
+.cur {
+    padding: 1px;
+}
+
+.mar {
+    margin: 26vw;
+    background-color: #00BFFF;
+    border-radius: 15px;
+}
+
+
+
+.meupost {
+    color: black;
+    background: #F5F5F5;
+    word-wrap: break-word;
+    border-radius: 15px;
+}
+
+.exibirpost {
+    background: #F5F5F5;
+    border-radius: 15px;
+    margin: 22vw;
+}
+

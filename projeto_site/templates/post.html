@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+
+<div class="container">
+    <br>
+    <h1>Comunidade Impressionadora</h1>
+    <hr>
+    <h3>Publicações</h3>
+
+
+    <div class="row border mt-3 p-4 meupost">
+        <div class="col col-2">
+            <h6>Publicado em: {{ datetime.strftime(post.data_criacao, '%d/%m/%Y') }}</h6>
+            <img src="{{ url_for('static', filename='foto_perfil/{}'.format(post.autor.foto_perfil)) }}" width="170">
+
+        </div>
+        <div class="col col-9 border mt-3 p-4">
+            {% if form_editar_post %}
+                <a href="#" class="text-decoration-none text-reset" data-bs-toggle="modal" data-bs-target="#exampleModal"><button class="btn btn-danger btn-sm mb-1">Excluir Post</button></a>
+                <form method="POST" action="{{ url_for('excluir_img', post_id=post.id) }}"><button class="btn btn-danger btn-sm">Excluir Imagem</button></form>
+            {% endif %}
+            <h4 class="mt-3">{{ post.autor.username }}</h4>
+            <hr>
+            <h4>{{ post.titulo }}</h4>
+            <br>
+            <p>{{ post.corpo }}</p>
+            {% if post.imagem %}
+                <img src="{{ url_for('static', filename='imagem_post/{}'.format(post.imagem)) }}">
+            {% else %}
+                <p></p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if form_editar_post %}
+        <div class="row">
+            <div class="col">
+                <form method="POST" action="" class="border mt-3 p-4 exibirpost" enctype="multipart/form-data">
+                    <legend>Editar Post</legend>
+                    <hr>
+                    {{ form_editar_post.csrf_token}}
+                    <fieldset>
+                        <div class="form-group mb-3">
+                            {{ form_editar_post.titulo.label(class="form-control-label") }}
+                            {% if form_editar_post.titulo.errors %}
+                                {{ form_editar_post.titulo(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form_editar_post.titulo.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form_editar_post.titulo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form_editar_post.corpo.label(class="form-control-label") }}
+                            {% if form_editar_post.corpo.errors %}
+                                {{ form_editar_post.corpo(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form_editar_post.corpo.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form_editar_post.corpo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_editar_post.img_edit.label }}<br>
+                            {{ form_editar_post.img_edit(class='form-control-file') }}
+                            {% if form_editar_post.img_edit.errors %}
+                                {% for erro in form_editar_post.img_edit.errors %}
+                                    <span class="text-danger ">{{ erro }}</span><br>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </fieldset>
+                    {{ form_editar_post.botao_att(class="btn btn-primary mt-2") }}
+                </form>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<br><br>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você realmente deseja exlcuir o post?
+      </div>
+      <div class="modal-footer">
+        <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}"><button type="submit" class="btn btn-danger">Excluir Post</button></form>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
