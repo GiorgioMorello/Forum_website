@@ -45,7 +45,7 @@ def login():
     form_login = FormLogin()
     if form_login.validate_on_submit():
         usuario = Usuario.query.filter_by(email=form_login.email.data).first()
-        if usuario and bcrypt.check_password_hash(usuario.password, form_login.password.data):
+        if usuario and bcrypt.check_password_hash(usuario.password, form_login.password.data): # Se usuário existe e se a senha é igual a que esta no banco de dados
             login_user(usuario)
             flash("Login feito com sucesso", "alert-success")
             parametro_next = request.args.get('next')
@@ -63,9 +63,16 @@ def login():
 def create():
     form_criar = FormCriar()
     if form_criar.validate_on_submit():
+        # Criptografar a senha
         senha_cript = bcrypt.generate_password_hash(form_criar.password.data)
+        
+        # Criar o usuario
         usuario = Usuario(username=form_criar.username.data, email=form_criar.email.data, password=senha_cript)
+        
+        # Adicionar na sessão
         database.session.add(usuario)
+        
+        # Colocar no Banco de dados
         database.session.commit()
         flash("Conta Criada com sucesso", "alert-success")
         return redirect(url_for('home'))
@@ -113,14 +120,17 @@ def criar():
 
 
 def salvar_imagem(imagem):
+    # Add o cod no nome da imagem
     cod = secrets.token_hex(8)
     nome, extensao = os.path.splitext(imagem.filename)
     nome_arquivo = nome + cod + extensao
     caminho_completo = os.path.join(app.root_path, 'static/foto_perfil', nome_arquivo)
-
+    
+    # Reduzir a imagem
     tamanho = (200, 200)
     imagem_reduzida = Image.open(imagem)
     imagem_reduzida.thumbnail(tamanho)
+    # Salvar a imagem
     imagem_reduzida.save(caminho_completo)
     return nome_arquivo
 
